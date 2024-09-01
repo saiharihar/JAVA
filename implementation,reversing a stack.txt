@@ -1,0 +1,30 @@
+import java.util.*;
+
+public class Main {
+    static Scanner test = new Scanner(System.in);
+    
+    static void reverse(Stack<String> s) {
+        if (s.isEmpty()) {
+            return;
+        }
+        String temp = s.peek();
+        s.pop();
+        reverse(s);
+        s.push(temp);
+    }
+    
+    public static void main(String args[]) {
+        Stack<String> s = new Stack<>();
+        int n = test.nextInt();
+        test.nextLine();
+        for (int i = 0; i < n; i++) {
+            String k = test.nextLine(); 
+            s.push(k);
+        }
+        reverse(s);
+        while (!s.isEmpty()) {
+            System.out.print(s.peek() + " ");
+            s.pop();
+        }
+    }
+}

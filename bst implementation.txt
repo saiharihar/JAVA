@@ -1,0 +1,50 @@
+import java.util.*;
+class node{
+    int data;
+    node left,right;
+    node(int d){
+        data=d;
+        left=right=null;
+    }
+}
+
+class Main{
+    static Scanner test=new Scanner(System.in);
+    static node build_tree(node root,int a){
+        if(root==null){
+            return new node(a);
+        }
+        if(a<root.data){
+        root.left=build_tree(root.left,a);
+        }
+        
+        if(a>root.data){
+            root.right=build_tree(root.right,a);
+        }
+        return root;
+    }
+    
+    static void inorder(node root){
+        if(root==null){
+            return;
+        }
+        inorder(root.left);
+        System.out.print(root.data+" ");
+        inorder(root.right);
+    }
+    
+    public static void main(String args[]){
+        int n;
+        n=test.nextInt();
+        int a[]=new int[n];
+        for(int i=0;i<n;i++){
+            a[i]=test.nextInt();
+        }
+        node root=null;
+        for(int i=0;i<n;i++){
+            root=build_tree(root,a[i]);
+        }
+        inorder(root);
+        
+    }
+}

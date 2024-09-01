@@ -1,0 +1,32 @@
+import java.util.*;
+
+public class Main {
+    static Scanner test = new Scanner(System.in);
+    
+    static void insertbottom(Stack<String> s,String data) {
+        if (s.isEmpty()) {
+            s.push(data);
+            return;
+        }
+        String temp = s.peek();
+        s.pop();
+        insertbottom(s,data);
+        s.push(temp);
+    }
+    
+    public static void main(String args[]) {
+        Stack<String> s = new Stack<>();
+        int n = test.nextInt();
+        test.nextLine();
+        for (int i = 0; i < n; i++) {
+            String k = test.nextLine(); 
+            s.push(k);
+        }
+        String data=test.nextLine();
+       insertbottom(s,data);
+        while (!s.isEmpty()) {
+            System.out.print(s.peek() + " ");
+            s.pop();
+        }
+    }
+}

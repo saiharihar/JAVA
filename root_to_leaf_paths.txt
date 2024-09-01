@@ -1,0 +1,52 @@
+import java.util.*;
+
+class node {
+    int data;
+    node left;
+    node right;
+
+    node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+
+class binary_tree {
+    static Scanner scanner = new Scanner(System.in);
+
+    static node buildTree() {
+        int data = scanner.nextInt();
+        if (data == -1) {
+            return null;
+        }
+        node root = new node(data);
+        root.left = buildTree();
+        root.right = buildTree();
+        return root;
+    }
+    static void roottoleafpaths(node root,List<Integer>v){
+        if(root==null){
+            return ;
+        }
+        if(root.left==null && root.right==null){
+            for(int i=0;i<v.size();i++){
+                System.out.print(v.get(i)+"->");
+            }
+            System.out.println(root.data);
+            return;
+        }
+        v.add(root.data);
+        roottoleafpaths(root.left,v);
+        roottoleafpaths(root.right,v);
+        v.remove(v.size()-1);
+        
+    }
+
+    public static void main(String[] args) {
+        node root = buildTree();
+        List<Integer>v=new ArrayList<>();
+        roottoleafpaths(root,v);
+        
+    }
+}

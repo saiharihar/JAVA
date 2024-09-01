@@ -1,0 +1,49 @@
+import java.util.*;
+
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+
+class binary_tree {
+    static Scanner scanner = new Scanner(System.in);
+
+    static Node buildTree() {
+        int data = scanner.nextInt();
+        if (data == -1) {
+            return null;
+        }
+        Node root = new Node(data);
+        root.left = buildTree();
+        root.right = buildTree();
+        return root;
+    }
+
+    static int countHalfNodes(Node root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int count = 0;
+        if ((root.left != null && root.right == null) || (root.left == null && root.right != null)) {
+            count++;
+        }
+        count += countHalfNodes(root.left);
+        count += countHalfNodes(root.right);
+
+        return count;
+    }
+
+    public static void main(String[] args) {
+        Node root = buildTree();
+        int halfNodeCount = countHalfNodes(root);
+        System.out.println("Number of half nodes: " + halfNodeCount);
+    }
+}

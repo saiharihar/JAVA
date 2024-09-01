@@ -1,0 +1,62 @@
+import java.util.*;
+
+class node {
+    int data;
+    node left;
+    node right;
+
+    node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+
+class binary_tree {
+    static Scanner scanner = new Scanner(System.in);
+
+    static node buildTree() {
+        int data = scanner.nextInt();
+        if (data == -1) {
+            return null;
+        }
+        node root = new node(data);
+        root.left = buildTree();
+        root.right = buildTree();
+        return root;
+    }
+    static boolean issymmetric(node root){
+        if(root==null){
+            return true;
+        }
+        Queue<node>q=new LinkedList<>();
+        q.add(root.left);
+        q.add(root.right);
+        while(!q.isEmpty()){
+            node l=q.peek();
+            q.remove();
+            node r=q.peek();
+            q.remove();
+            if(l==null && r==null){
+                continue;
+            }
+            if(l==null || r==null){
+                return false;
+            }
+            if(l.data!=r.data){
+                return false;
+            }
+            q.add(l.left);
+            q.add(r.right);
+            q.add(l.right);
+            q.add(r.left);
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        node root = buildTree();
+        boolean k=issymmetric(root);
+        System.out.println(k);
+    }
+}

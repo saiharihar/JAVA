@@ -1,0 +1,70 @@
+import java.util.*;
+import java.lang.*;
+
+class Node {
+    String data;
+    Node left;
+    Node right;
+
+    Node(String data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+
+class BinaryTree {
+    static Scanner scanner = new Scanner(System.in);
+
+    static Node buildTree() {
+        String data = scanner.next();
+        if (data.equals("-1")) {
+            return null;
+        }
+        Node root = new Node(data);
+        root.left = buildTree();
+        root.right = buildTree();
+        return root;
+    }
+
+    static int toInt(String s) {
+        int num = 0;
+        if (!s.startsWith("-")) {
+            for (int i = 0; i < s.length(); i++) {
+                num = num * 10 + (int)(s.charAt(i) - '0');
+            }
+        } else {
+            for (int i = 1; i < s.length(); i++) {
+                num = num * 10 + (int)(s.charAt(i) - '0');
+            }
+            num = num * -1;
+        }
+        return num;
+    }
+
+    static int eval(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.left == null && root.right == null) {
+            return toInt(root.data);
+        }
+        int l = eval(root.left);
+        int r = eval(root.right);
+        switch (root.data) {
+            case "+":
+                return l + r;
+            case "-":
+                return l - r;
+            case "*":
+                return l * r;
+            default:
+                return l / r;
+        }
+    }
+
+    public static void main(String[] args) {
+        Node root = buildTree();
+        System.out.println(eval(root));
+    }
+}

@@ -1,0 +1,60 @@
+import java.util.*;
+
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+
+class binary_tree {
+    static Scanner scanner = new Scanner(System.in);
+
+    static Node buildTree() {
+        int data = scanner.nextInt();
+        if (data == -1) {
+            return null;
+        }
+        Node root = new Node(data);
+        root.left = buildTree();
+        root.right = buildTree();
+        return root;
+    }
+    
+    static Node removehalfnodes(Node root){
+        if(root==null){
+            return null;
+        }
+        root.left=removehalfnodes(root.left);
+        root.right=removehalfnodes(root.right);
+        if(root.left==null && root.right==null){
+            return root;
+        }
+        if(root.left==null && root.right!=null){
+            return root.right;
+        }
+        if(root.left!=null && root.right==null){
+            return  root.left;
+        }
+        return root;
+    }
+    static void inorder(Node root){
+        if(root==null){
+            return;
+        }
+        inorder(root.left);
+        System.out.print(root.data+" ");
+        inorder(root.right);
+    }
+
+    public static void main(String[] args) {
+        Node root = buildTree();
+        Node h=removehalfnodes(root);
+        inorder(h);
+    }
+}

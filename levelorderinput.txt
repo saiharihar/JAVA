@@ -1,0 +1,67 @@
+import java.util.*;
+class node{
+    int data;
+    node right;
+    node left;
+    node(int data){
+        this.data=data;
+        left=null;
+        right=null;
+    }
+}
+
+class binary_tree{
+    static Scanner test=new Scanner(System.in);
+    static node build_tree(){
+        
+        int d=test.nextInt();
+        node root=new node(d);
+        Queue<node>q=new LinkedList<>();
+        q.add(root);
+        
+       while(!q.isEmpty()){
+           node temp=q.poll();
+           int c1,c2;
+           c1=test.nextInt();
+           c2=test.nextInt();
+           if(c1!=-1){
+               temp.left=new node(c1);
+               q.add(temp.left);
+           }
+           if(c2!=-1){
+               temp.right=new node(c2);
+               q.add(temp.right);
+           }
+       }
+       return root;
+    }
+    
+    static void levelorder(node root){
+        Queue<node>q=new LinkedList<>();
+        q.add(root);
+        q.add(null);
+        while(!q.isEmpty()){
+            node temp=q.poll();
+            if(temp==null){
+                System.out.println();
+                if(!q.isEmpty()){
+                    q.add(null);
+                }
+            }
+            else{
+                System.out.print(temp.data+" ");
+                if(temp.left!=null){
+                    q.add(temp.left);
+                }
+                if(temp.right!=null){
+                    q.add(temp.right);
+                }
+            }
+        }
+    }
+    
+    public static void main(String args[]){
+        node root=build_tree();
+        levelorder(root);
+    }
+}

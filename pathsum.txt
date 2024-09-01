@@ -1,0 +1,74 @@
+import java.util.*;
+
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+
+public class binary_tree {
+    static Scanner scanner = new Scanner(System.in);
+    static List<List<Integer>> vv;
+
+    static Node buildTree() {
+        int data = scanner.nextInt();
+        if (data == -1) {
+            return null;
+        }
+        Node root = new Node(data);
+        root.left = buildTree();
+        root.right = buildTree();
+        return root;
+    }
+
+    static void help(Node root, int ts, List<Integer> v, int b) {
+        if (root == null) {
+            return;
+        }
+        if (root.left == null && root.right == null) {
+            if (b + root.data == ts) {
+                v.add(root.data);
+                vv.add(new ArrayList<>(v));
+                v.remove(v.size() - 1);
+            }
+            return;
+        }
+        v.add(root.data);
+        if (root.left != null) {
+            help(root.left, ts, v, b + root.data);
+        }
+        if (root.right != null) {
+            help(root.right, ts, v, b + root.data);
+        }
+        v.remove(v.size() - 1);
+    }
+
+    static List<List<Integer>> pathSum(Node root, int target) {
+        vv = new ArrayList<>();
+        List<Integer> v = new ArrayList<>();
+        help(root, target, v, 0);
+        return vv;
+    }
+
+    public static void main(String args[]) {
+        Node root = buildTree();
+        int target = scanner.nextInt();
+        List<List<Integer>> result = pathSum(root, target);
+
+        for (List<Integer> path : result) {
+            for (int i = 0; i < path.size(); i++) {
+                System.out.print(path.get(i));
+                if (i != path.size() - 1) {
+                    System.out.print(" -> ");
+                }
+            }
+            System.out.println();
+        }
+    }
+}

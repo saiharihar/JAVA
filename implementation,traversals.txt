@@ -1,0 +1,90 @@
+import java.util.*;
+class node{
+    int data;
+    node right;
+    node left;
+    
+    node(int data){
+        this.data=data;
+        right=null;
+        left=null;
+    }
+}
+class binary_tree{
+    static Scanner test=new Scanner(System.in);
+    static node build_tree(){
+        int data=test.nextInt();
+        if(data==-1){
+            return null;
+        }
+        node n=new node(data);
+        n.left=build_tree();
+        n.right=build_tree();
+        return n;
+    }
+    static void preorder(node root){
+        if(root==null){
+            return ;
+        }
+        System.out.print(root.data+" ");
+        preorder(root.left);
+        preorder(root.right);
+    }
+    
+    static void postorder(node root){
+        if(root==null){
+            return ;
+        }
+        postorder(root.left);
+        postorder(root.right);
+        System.out.print(root.data+" ");
+    }
+    
+    static void inorder(node root){
+        if(root==null){
+            return;
+        }
+        inorder(root.left);
+        System.out.print(root.data+" ");
+        inorder(root.right);
+    }
+    
+    static void levelorder(node root){
+        Queue<node>q=new LinkedList<>();
+        q.add(root);
+        q.add(null);
+        while(!q.isEmpty()){
+            node temp=q.poll();
+            if(temp==null){
+                System.out.println();
+                if(!q.isEmpty()){
+                    q.add(null);
+                }
+            }
+            else{
+                System.out.print(temp.data+" ");
+                if(temp.left!=null){
+                    q.add(temp.left);
+                }
+                if(temp.right!=null){
+                    q.add(temp.right);
+                }
+            }
+        }
+    }
+
+public static void main(String args[]){
+    node root=build_tree();
+     System.out.println("preorder");
+    preorder(root);
+    System.out.println();
+     System.out.println("postorder");
+    postorder(root);
+    System.out.println();
+     System.out.println("inorder");
+    inorder(root);
+    System.out.println();
+     System.out.println("levelorder");
+    levelorder(root);
+}
+}

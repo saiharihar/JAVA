@@ -1,0 +1,61 @@
+import java.util.*;
+
+class Main {
+    static class node {
+        int data;
+        node right;
+        node left;
+
+        node(int d) {
+            data = d;
+            right = null;
+            left = null;
+        }
+    }
+
+    static node build(node root, int a) {
+        if (root == null) {
+            return new node(a);
+        }
+        if (a < root.data) {
+            root.left = build(root.left, a);
+        }
+        if (a > root.data) {
+            root.right = build(root.right, a);
+        }
+        return root;
+    }
+    
+    static boolean isbst(node root, Integer minkey, Integer maxkey) {
+        if (root == null) {
+            return true;
+        }
+        if ((minkey != null && root.data <= minkey) || (maxkey != null && root.data >= maxkey)) {
+            return false;
+        }
+        return isbst(root.left, minkey, root.data) && isbst(root.right, root.data, maxkey);
+    }
+
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        node root = null;
+
+        System.out.println("Enter the number of elements in the BST:");
+        int n = scanner.nextInt();
+
+        int[] a = new int[n];
+        System.out.println("Enter the elements in the BST:");
+        for (int i = 0; i < n; i++) {
+            a[i] = scanner.nextInt();
+        }
+
+        for (int i = 0; i < n; i++) {
+            root = build(root, a[i]);
+        }
+        boolean q = isbst(root, null, null);
+        System.out.println(q);
+
+        scanner.close();
+    }
+}

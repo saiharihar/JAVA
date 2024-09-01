@@ -1,0 +1,49 @@
+import java.util.*;
+import java.lang.*;
+class node{
+    int data;
+    node left;
+    node right;
+    node(int data){
+        this.data=data;
+        left=null;
+        right=null;
+    }
+}
+
+class binary_tree{
+    static Scanner test=new Scanner(System.in);
+    static node build_tree(){
+        int d=test.nextInt();
+        if(d==-1){
+            return null;
+        }
+        node n=new node(d);
+        n.left=build_tree();
+        n.right=build_tree();
+        return n;
+    }
+    
+    static int min_depth(node root){
+        if(root==null){
+            return 0;
+        }
+        if(root.left==null && root.right==null){
+            return 1;
+        }
+        int l=Integer.MAX_VALUE;
+        int r=Integer.MAX_VALUE;
+        if(root.left!=null){
+            l=min_depth(root.left);
+        }
+        if(root.right!=null){
+            r=min_depth(root.right);
+        }
+        return Math.min(l,r)+1 ;
+    }
+    public static void main(String args[]){
+        node root=build_tree();
+        int k=min_depth(root);
+        System.out.println(k);
+    }
+}

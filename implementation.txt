@@ -1,0 +1,30 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner test = new Scanner(System.in);
+        Queue<String> q = new LinkedList<>();
+        System.out.println("Size of queue:");
+        int n = test.nextInt();
+
+        System.out.println("Enter elements in the queue:");
+        for (int i = 0; i < n; i++) {
+            String element = test.next();
+            q.add(element);
+        }
+        
+        System.out.println("Elements in the queue:");
+        while (!q.isEmpty()) {
+            System.out.print(q.poll() + " ");
+        }
+        q.add("apple");
+        q.add("bat");
+        q.add("egg");
+        System.out.println("top element in the queue is");
+        System.out.println(q.peek());
+        q.remove();
+        System.out.println(q.poll());
+        
+        test.close(); 
+    }
+}

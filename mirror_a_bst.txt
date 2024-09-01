@@ -1,0 +1,73 @@
+import java.util.*;
+
+class Main {
+    static class node {
+        int data;
+        node right;
+        node left;
+
+        node(int d) {
+            data = d;
+            right = null;
+            left = null;
+        }
+    }
+
+    static node build(node root, int a) {
+        if (root == null) {
+            return new node(a);
+        }
+        if (a < root.data) {
+            root.left = build(root.left, a);
+        }
+        if (a > root.data) {
+            root.right = build(root.right, a);
+        }
+        return root;
+    }
+    
+    static node mirror_bst(node root){
+        if(root==null){
+            return null;
+        }
+        node temp=root.left;
+        root.left=root.right;
+        root.right=temp;
+        mirror_bst(root.left);
+        mirror_bst(root.right);
+        return root;
+    }
+    
+
+    static void printInorder(node root) {
+        if (root == null) {
+            return;
+        }
+        printInorder(root.left);
+        System.out.print(root.data + " ");
+        printInorder(root.right);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        node root = null;
+
+        System.out.println("Enter the number of elements in the BST:");
+        int n = scanner.nextInt();
+
+        int[] a = new int[n];
+        System.out.println("Enter the elements in the BST:");
+        for (int i = 0; i < n; i++) {
+            a[i] = scanner.nextInt();
+        }
+
+        for (int i = 0; i < n; i++) {
+            root = build(root, a[i]);
+        }
+        node q=mirror_bst(root);
+        System.out.println("Inorder traversal after removal:");
+        printInorder(q);
+
+        scanner.close();
+    }
+}

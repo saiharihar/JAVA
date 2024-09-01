@@ -1,0 +1,44 @@
+import java.util.*;
+import java.lang.Math;
+class node{
+    int data;
+    node right;
+    node left;
+    
+    node(int data){
+        this.data=data;
+        right=null;
+        left=null;
+    }
+}
+class binary_tree{
+    static Scanner test=new Scanner(System.in);
+    static node build_tree(){
+        int data=test.nextInt();
+        if(data==-1){
+            return null;
+        }
+        node n=new node(data);
+        n.left=build_tree();
+        n.right=build_tree();
+        return n;
+    }
+    static void kthlevel(node root,int k,int level){
+        if(root==null){
+            return;
+        }
+        kthlevel(root.left,k,level+1);
+        kthlevel(root.right, k,level+1);
+        if(k==level){
+            System.out.println(root.data);
+        }
+    }
+   
+
+public static void main(String args[]){
+    node root=build_tree();
+    int k;
+    k=test.nextInt();
+    kthlevel(root,k,1);
+}
+}
